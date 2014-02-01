@@ -22,6 +22,68 @@ function suspend_am_custom_profile_alter(&$data) {
 	}
 }
 
+
+///////////////// BEGIN TESTING /////////////////
+/*
+ * Javascript confirm pop up
+ *
+function suspend_button_suspend($form, &$form_state) {
+
+	$form['suspend'] = array(
+	    '#type' => 'button',
+	    '#value' => t('Suspend'),
+	    '#attributes' => array('onclick' => 'if(!confirm("Please confirm the suspension.")){return false;}'),
+        '#ajax'  => array('callback' => '_suspend_suspend'),
+	);
+
+	return $form;
+}
+*/
+
+/*
+ * JQuery Confirm WITH AJAX too... Doesn't work
+ *
+function suspend_init() {
+  $js = "
+      Drupal.behaviors.confirm = {
+	    attach: function(context, settings) {
+
+	      var events =  $('.form-submit-delete').clone(true).data('events');// Get the jQuery events.
+	      $('.form-submit-delete').unbind('mousedown'); // Remove the click events.
+
+	      $('.form-submit-delete').mousedown(function () {
+		    if (confirm('Please confirm the suspension.')) {
+		      $.each(events.mousedown, function() {
+
+		        this.handler(); // Invoke the mousedown handlers that was removed.
+		      });
+		    }
+		    return false; // Prevent default action.
+	      });
+	    }
+	  }
+    ";
+    drupal_add_js($js);
+}
+function suspend_button_suspend($form, &$form_state) {
+
+  	$form['suspend'] = array(
+                '#type' => 'button',
+                '#name' => 'suspend',
+                '#value' => 'Suspend',
+                '#attributes' => array(
+				    'class' => array('confirm'),
+				    'onclick' => "return confirm('Please confirm the suspension.')"
+				  ),
+                '#ajax'  => array('callback' => '_suspend_suspend'),
+            );
+
+	return $form;
+}
+*/
+///////////////// END TESTING /////////////////
+
+
 function suspend_button_suspend($form, &$form_state) {
   	$form['suspend'] = array(
                 '#type' => 'button',
